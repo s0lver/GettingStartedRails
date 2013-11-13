@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+
+	http_basic_authenticate_with name: 'rafael', password: 'pass', except: [:index, :show]
+
 	def index
 		@posts = Post.all
 	end
@@ -33,6 +36,13 @@ class PostsController < ApplicationController
 		else
 			render 'edit'
 		end
+	end
+
+	def destroy
+		@post = Post.find(params[:id])
+		@post.destroy
+
+		redirect_to posts_path
 	end
 
 	private
